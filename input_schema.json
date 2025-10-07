@@ -1,0 +1,70 @@
+{
+  "title": "MSD Page Images Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "startUrl": {
+      "title": "Start URL",
+      "type": "string",
+      "description": "The URL to start crawling from",
+      "editor": "textfield",
+      "prefill": "https://example.com"
+    },
+    "maxPages": {
+      "title": "Max Pages",
+      "type": "integer",
+      "description": "Maximum number of pages to crawl and analyze for images",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 5,
+      "editor": "number"
+    },
+    "maxImagesPerPage": {
+      "title": "Max Images Per Page",
+      "type": "integer",
+      "description": "Maximum number of images to analyze per page",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 20,
+      "editor": "number"
+    },
+    "includeImageSizeAnalysis": {
+      "title": "Include Image Size Analysis",
+      "type": "boolean",
+      "description": "Whether to analyze image sizes and file types",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "includeAltTextAnalysis": {
+      "title": "Include Alt Text Analysis",
+      "type": "boolean",
+      "description": "Whether to analyze alt text for images",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "crawlInternalLinks": {
+      "title": "Crawl Internal Links",
+      "type": "boolean",
+      "description": "Whether to crawl internal links to find more pages",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "userAgent": {
+      "title": "User Agent",
+      "type": "string",
+      "description": "User agent string to use for requests",
+      "default": "Mozilla/5.0 (compatible; MSD-PageImages/1.0)",
+      "editor": "textfield"
+    },
+    "waitForPageLoad": {
+      "title": "Wait for Page Load",
+      "type": "integer",
+      "description": "Time to wait for page to fully load (in milliseconds)",
+      "minimum": 1000,
+      "maximum": 10000,
+      "default": 3000,
+      "editor": "number"
+    }
+  },
+  "required": ["startUrl"]
+}
