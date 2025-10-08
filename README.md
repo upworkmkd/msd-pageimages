@@ -1,117 +1,141 @@
 # MSD Page Images Actor
 
-A comprehensive page images analysis actor for MySmartDigital that extracts and analyzes images from websites, providing detailed information about image usage, optimization, and accessibility.
+Extract and analyze all images from websites with comprehensive reports on image usage, accessibility, and optimization opportunities.
 
-## Features
+## What does MSD Page Images Actor do?
 
-- **Image Extraction**: Automatically finds and extracts all images from web pages
-- **Alt Text Analysis**: Identifies images missing alt text for accessibility compliance
-- **Image Size Analysis**: Detects image file sizes and types
-- **Multi-page Crawling**: Analyzes multiple pages from the same domain
-- **Domain-level Statistics**: Provides comprehensive domain-wide image analysis
-- **Optimization Recommendations**: Identifies areas for image optimization
+This Apify Actor crawls websites and performs detailed image analysis including:
 
-## Input Format
+- **🖼️ Image Discovery**: Finds all images on web pages including img tags with various URL formats
+- **♿ Accessibility Analysis**: Identifies images missing alt text for WCAG compliance
+- **📊 Size & Performance**: Analyzes image file sizes and content types
+- **🔍 Multi-page Crawling**: Automatically discovers and analyzes internal pages
+- **📈 Domain Statistics**: Provides aggregated insights across entire domains
+- **💡 Optimization Tips**: Generates recommendations for better image performance
 
-The actor accepts the following input format:
+Perfect for SEO audits, accessibility compliance checks, website optimization, and content quality analysis.
+
+## Input
+
+The actor accepts the following input parameters:
 
 ```json
 {
-    "startUrl": "https://rouvres77.fr/",
-    "maxPages": 5
+    "startUrl": "https://example.com/",
+    "maxPages": 10,
+    "maxImagesPerPage": 50,
+    "includeImageSizeAnalysis": true,
+    "includeAltTextAnalysis": true,
+    "crawlInternalLinks": true
 }
 ```
 
 ### Input Parameters
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `startUrl` | string | required | The URL to start crawling from |
-| `maxPages` | integer | 5 | Maximum number of pages to crawl and analyze |
-| `maxImagesPerPage` | integer | 20 | Maximum number of images to analyze per page |
-| `includeImageSizeAnalysis` | boolean | true | Whether to analyze image sizes and file types |
-| `includeAltTextAnalysis` | boolean | true | Whether to analyze alt text for images |
-| `crawlInternalLinks` | boolean | true | Whether to crawl internal links to find more pages |
-| `userAgent` | string | "Mozilla/5.0 (compatible; MSD-PageImages/1.0)" | User agent string for requests |
-| `waitForPageLoad` | integer | 3000 | Time to wait for page load (milliseconds) |
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `startUrl` | String | Yes | The starting URL to begin crawling |
+| `maxPages` | Integer | No | Maximum pages to crawl (default: 5, max: 100) |
+| `maxImagesPerPage` | Integer | No | Maximum images to analyze per page (default: 20, max: 100) |
+| `includeImageSizeAnalysis` | Boolean | No | Fetch image sizes and content types (default: true) |
+| `includeAltTextAnalysis` | Boolean | No | Check for missing alt text (default: true) |
+| `crawlInternalLinks` | Boolean | No | Follow internal links to discover more pages (default: true) |
+| `userAgent` | String | No | Custom user agent string for requests |
+| `waitForPageLoad` | Integer | No | Page load wait time in ms (default: 3000) |
 
-## Output Format
+## Output
 
-The actor returns comprehensive image analysis data including:
-
-### Domain-level Analysis
-- Total images found across all pages
-- Images without alt text statistics
-- Average images per page
-- Image size analysis
-- Image type breakdown
-- Optimization recommendations
-
-### Page-level Analysis
-- Individual page image data
-- Detailed image information (URL, alt text, size, type)
-- Status codes and error handling
-
-### Example Output
+The actor returns structured JSON data with both **domain-level** and **page-level** analysis:
 
 ```json
 {
     "domain": {
         "domain_name": "example.com",
-        "total_pages_analyzed": 3,
-        "total_images_found": 15,
-        "total_images_without_alt": 2,
-        "total_images_without_alt_percentage": 13,
-        "average_images_per_page": 5,
-        "total_image_size_kb": 245.6,
+        "total_pages_analyzed": 10,
+        "total_images_found": 87,
+        "total_images_without_alt": 12,
+        "total_images_without_alt_percentage": 14,
+        "average_images_per_page": 8.7,
+        "total_image_size_kb": 1245.6,
         "image_types": {
-            "jpeg": 8,
-            "png": 5,
-            "webp": 2
+            "jpeg": 45,
+            "png": 28,
+            "webp": 14
         },
         "most_common_image_type": "jpeg",
         "optimization_recommendations": {
-            "images_without_alt": 2,
+            "images_without_alt": 12,
             "needs_alt_text_optimization": true,
-            "total_size_kb": 245.6,
-            "average_size_kb": 16.4
+            "total_size_kb": 1245.6,
+            "average_size_kb": 14.3
         }
     },
     "pages": [
         {
             "url": "https://example.com/",
-            "title": "Example Domain",
-            "totalImagesFound": 5,
-            "imagesAnalyzed": 5,
-            "imagesWithoutAltCount": 1,
+            "title": "Homepage",
+            "totalImagesFound": 15,
+            "imagesAnalyzed": 15,
+            "imagesWithoutAltCount": 2,
             "images": [
                 {
-                    "imageUrl": "https://example.com/image.jpg",
+                    "imageUrl": "https://example.com/hero.jpg",
                     "imageIndex": 1,
-                    "alt": "Example image",
+                    "alt": "Hero banner",
                     "contentType": "image/jpeg",
-                    "sizeInBytes": 45632,
-                    "sizeInKb": 45.63,
+                    "sizeInBytes": 125430,
+                    "sizeInKb": 125.43,
                     "statusCode": 200,
                     "hasAlt": true
                 }
             ]
         }
-    ],
-    "analysis": {
-        "total_pages_processed": 3,
-        "analysis_completed_at": "2024-01-15T10:30:00.000Z",
-        "images_engine_version": "1.0.0",
-        "data_format_version": "1.0"
-    }
+    ]
 }
 ```
 
-## Image Analysis Features
+### Domain Analysis Fields
 
-### Supported Image Types
+- **total_pages_analyzed**: Number of pages successfully crawled
+- **total_images_found**: Total images discovered across all pages
+- **total_images_without_alt**: Count of images missing alt attributes
+- **total_images_without_alt_percentage**: Percentage of images without alt text
+- **average_images_per_page**: Mean number of images per page
+- **total_image_size_kb**: Combined size of all analyzed images
+- **image_types**: Breakdown of image formats (jpeg, png, webp, svg, etc.)
+- **optimization_recommendations**: Actionable insights for improvement
+
+### Page Analysis Fields
+
+Each page object contains:
+- **url**: Page URL
+- **title**: Page title
+- **totalImagesFound**: Number of images on the page
+- **imagesAnalyzed**: Number of images actually analyzed (may be limited by maxImagesPerPage)
+- **imagesWithoutAltCount**: Images missing alt text
+- **images**: Array of detailed image objects with URL, alt text, size, content type, and status
+
+## Use Cases
+
+### ♿ **Accessibility Compliance**
+Identify images missing alt text to meet WCAG standards and improve screen reader experience.
+
+### 🚀 **Website Performance Optimization**
+Discover large images that slow down your site and analyze image format distribution.
+
+### 🔍 **SEO Audits**
+Ensure all images have proper alt text for better search engine optimization and image search rankings.
+
+### 📊 **Content Quality Analysis**
+Get comprehensive statistics on image usage across your website or client sites.
+
+### 🔧 **Website Migration**
+Audit images before and after site migrations to ensure nothing is broken or missing.
+
+## Supported Image Formats
+
 - JPEG/JPG
-- PNG
+- PNG  
 - GIF
 - WebP
 - SVG
@@ -119,36 +143,21 @@ The actor returns comprehensive image analysis data including:
 - ICO
 - TIFF
 
-### Analysis Capabilities
-- **Alt Text Detection**: Identifies missing alt text for accessibility
-- **Image Size Analysis**: Measures file sizes and calculates averages
-- **Content Type Detection**: Identifies image formats
-- **URL Normalization**: Handles relative and absolute image URLs
-- **Error Handling**: Gracefully handles broken or inaccessible images
+## Integration
 
-### Optimization Recommendations
-- Images without alt text
-- Large image file sizes
-- Image type distribution
-- Total image payload size
+This actor can be used with:
 
-## Error Handling
+- **Apify API**: Integrate into your workflows programmatically
+- **Apify Webhooks**: Trigger actions when crawls complete
+- **Apify Schedules**: Run automated periodic audits
+- **Apify Storage**: Export data to datasets, key-value stores, or request queues
 
-The actor includes comprehensive error handling:
-- Network timeouts and connection errors
-- Invalid URLs and malformed HTML
-- Missing or inaccessible images
-- HTTP status code handling
-- Graceful degradation for failed requests
+## Resources
 
-## Performance Considerations
+- **Apify Platform**: [https://apify.com](https://apify.com)
+- **Actor Documentation**: Learn more about [Apify Actors](https://docs.apify.com/actors)
+- **API Reference**: [Apify API Documentation](https://docs.apify.com/api/v2)
 
-- Configurable limits on pages and images per page
-- Efficient HTML parsing with Cheerio
-- Minimal memory footprint for large-scale analysis
-- Optimized image size detection with HEAD requests
+## Need Help?
 
-
-## Support
-
-For support and questions, please contact the MySmartDigital team.
+For questions or issues with this actor, please reach out to MySmartDigital support.
