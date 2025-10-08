@@ -107,29 +107,6 @@ The actor returns comprehensive image analysis data including:
 }
 ```
 
-### Single Page Analysis
-```bash
-curl -X POST http://localhost:3000/analyze \
-  -H "Content-Type: application/json" \
-  -d '{
-    "url": "https://example.com",
-    "maxImagesPerPage": 20,
-    "includeImageSizeAnalysis": true,
-    "includeAltTextAnalysis": true
-  }'
-```
-
-### Multi-page Analysis
-```bash
-curl -X POST http://localhost:3000/analyze-multi \
-  -H "Content-Type: application/json" \
-  -d '{
-    "startUrl": "https://example.com",
-    "maxPages": 5,
-    "maxImagesPerPage": 20,
-    "crawlInternalLinks": true
-  }'
-```
 ## Image Analysis Features
 
 ### Supported Image Types
