@@ -107,64 +107,6 @@ The actor returns comprehensive image analysis data including:
 }
 ```
 
-## Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd msd-pageimages
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Copy environment variables:
-```bash
-cp env.example .env
-```
-
-## Usage
-
-### Running the Actor
-
-```bash
-npm start
-```
-
-### Local Development
-
-Start the local API server:
-```bash
-npm run api
-```
-
-The API will be available at `http://localhost:3000` with the following endpoints:
-
-- `GET /health` - Health check
-- `POST /analyze` - Single page analysis
-- `POST /analyze-multi` - Multi-page analysis
-
-### Testing
-
-Run the test suite:
-```bash
-npm test
-```
-
-Run simple analysis test:
-```bash
-node test-simple.js
-```
-
-Run API tests:
-```bash
-node test-api.js
-```
-
-## API Endpoints
-
 ### Single Page Analysis
 ```bash
 curl -X POST http://localhost:3000/analyze \
@@ -188,16 +130,6 @@ curl -X POST http://localhost:3000/analyze-multi \
     "crawlInternalLinks": true
   }'
 ```
-
-## Environment Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PORT` | 3000 | Server port for local API |
-| `USER_AGENT` | "Mozilla/5.0 (compatible; MSD-PageImages/1.0)" | User agent for requests |
-| `REQUEST_TIMEOUT` | 30000 | Request timeout in milliseconds |
-| `MAX_REDIRECTS` | 5 | Maximum redirects to follow |
-
 ## Image Analysis Features
 
 ### Supported Image Types
@@ -239,17 +171,6 @@ The actor includes comprehensive error handling:
 - Minimal memory footprint for large-scale analysis
 - Optimized image size detection with HEAD requests
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
-## License
-
-MIT License - see LICENSE file for details.
 
 ## Support
 
