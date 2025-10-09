@@ -1,7 +1,11 @@
 {
 	"actorSpecification": 1,
 	"name": "msd-pageimages",
-	"version": "0.0",
+	"title": "Page Images Analyzer",
+	"version": "1.0",
 	"buildTag": "latest",
-	"environmentVariables": {}
+	"environmentVariables": {},
+	"storages": {
+		"dataset": "./dataset_schema.json"
+	}
 }

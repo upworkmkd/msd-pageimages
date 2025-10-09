@@ -1,0 +1,248 @@
+{
+	"actorSpecification": 1,
+	"fields": {
+		"type": "object",
+		"properties": {
+			"url": {
+				"type": "string",
+				"description": "Page URL"
+			},
+			"title": {
+				"type": "string",
+				"description": "Page title"
+			},
+			"domain": {
+				"type": "string",
+				"description": "Domain name"
+			},
+			"totalImagesFound": {
+				"type": "number",
+				"description": "Total number of images found on the page"
+			},
+			"imagesAnalyzed": {
+				"type": "number",
+				"description": "Number of images analyzed"
+			},
+			"images": {
+				"type": "array",
+				"description": "Array of analyzed images"
+			},
+			"imagesWithoutAlt": {
+				"type": "array",
+				"description": "Images without alt text"
+			},
+			"imagesWithoutAltCount": {
+				"type": "number",
+				"description": "Count of images without alt text"
+			},
+			"imagesWithAltCount": {
+				"type": "number",
+				"description": "Count of images with alt text"
+			},
+			"averageImageSize": {
+				"type": "number",
+				"description": "Average image size in bytes"
+			},
+			"totalImageSize": {
+				"type": "number",
+				"description": "Total size of all images in bytes"
+			},
+			"imageTypes": {
+				"type": "object",
+				"description": "Distribution of image types"
+			},
+			"analysis_date": {
+				"type": "string",
+				"description": "Analysis date and time"
+			},
+			"data_source": {
+				"type": "string",
+				"description": "Data source identifier"
+			}
+		}
+	},
+	"views": {
+		"overview": {
+			"title": "Overview",
+			"description": "Overview of page images analysis results",
+			"transformation": {
+				"fields": [
+					"url",
+					"title",
+					"domain",
+					"totalImagesFound",
+					"imagesAnalyzed",
+					"imagesWithAltCount",
+					"imagesWithoutAltCount",
+					"averageImageSize",
+					"totalImageSize",
+					"imageTypes",
+					"analysis_date"
+				]
+			},
+			"display": {
+				"component": "table",
+				"properties": {
+					"url": {
+						"label": "Page URL",
+						"format": "link"
+					},
+					"title": {
+						"label": "Page Title",
+						"format": "text"
+					},
+					"domain": {
+						"label": "Domain",
+						"format": "text"
+					},
+					"totalImagesFound": {
+						"label": "Total Images",
+						"format": "number"
+					},
+					"imagesAnalyzed": {
+						"label": "Images Analyzed",
+						"format": "number"
+					},
+					"imagesWithAltCount": {
+						"label": "With Alt Text",
+						"format": "number"
+					},
+					"imagesWithoutAltCount": {
+						"label": "Without Alt Text",
+						"format": "number"
+					},
+					"averageImageSize": {
+						"label": "Avg Size (bytes)",
+						"format": "number"
+					},
+					"totalImageSize": {
+						"label": "Total Size (bytes)",
+						"format": "number"
+					},
+					"imageTypes": {
+						"label": "Image Types",
+						"format": "object"
+					},
+					"analysis_date": {
+						"label": "Analysis Date",
+						"format": "date"
+					}
+				}
+			}
+		},
+		"images": {
+			"title": "Images Detail",
+			"description": "Detailed information for each image",
+			"transformation": {
+				"fields": [
+					"url",
+					"imageUrl",
+					"imageIndex",
+					"alt",
+					"title",
+					"width",
+					"height",
+					"hasAlt",
+					"hasTitle",
+					"contentType",
+					"sizeInBytes",
+					"sizeInKb",
+					"statusCode"
+				],
+				"unwind": ["images"]
+			},
+			"display": {
+				"component": "table",
+				"properties": {
+					"url": {
+						"label": "Page URL",
+						"format": "link"
+					},
+					"imageUrl": {
+						"label": "Image URL",
+						"format": "image"
+					},
+					"imageIndex": {
+						"label": "Index",
+						"format": "number"
+					},
+					"alt": {
+						"label": "Alt Text",
+						"format": "text"
+					},
+					"title": {
+						"label": "Title",
+						"format": "text"
+					},
+					"width": {
+						"label": "Width",
+						"format": "text"
+					},
+					"height": {
+						"label": "Height",
+						"format": "text"
+					},
+					"hasAlt": {
+						"label": "Has Alt",
+						"format": "boolean"
+					},
+					"hasTitle": {
+						"label": "Has Title",
+						"format": "boolean"
+					},
+					"contentType": {
+						"label": "Content Type",
+						"format": "text"
+					},
+					"sizeInBytes": {
+						"label": "Size (bytes)",
+						"format": "number"
+					},
+					"sizeInKb": {
+						"label": "Size (KB)",
+						"format": "number"
+					},
+					"statusCode": {
+						"label": "Status",
+						"format": "number"
+					}
+				}
+			}
+		},
+		"issues": {
+			"title": "Images Without Alt Text",
+			"description": "Images missing alt text (accessibility issues)",
+			"transformation": {
+				"fields": [
+					"url",
+					"title",
+					"imageUrl",
+					"imageIndex"
+				],
+				"unwind": ["imagesWithoutAlt"]
+			},
+			"display": {
+				"component": "table",
+				"properties": {
+					"url": {
+						"label": "Page URL",
+						"format": "link"
+					},
+					"title": {
+						"label": "Page Title",
+						"format": "text"
+					},
+					"imageUrl": {
+						"label": "Image URL",
+						"format": "image"
+					},
+					"imageIndex": {
+						"label": "Image Index",
+						"format": "number"
+					}
+				}
+			}
+		}
+	}
+}
+
