@@ -67,7 +67,7 @@ async function testMultiPageAnalysis() {
 }
 
 async function runTests() {
-    console.log('Starting MSD Page Images API tests...\n');
+    console.log('Starting SEO Image Optimization Checker API tests...\n');
     
     const healthCheck = await testHealthCheck();
     if (!healthCheck) {

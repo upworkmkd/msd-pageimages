@@ -1,5 +1,5 @@
 /**
- * Page Images Analyzer for MSD Page Images Actor
+ * Page Images Analyzer for SEO Image Optimization Checker
  * 
  * @author MySmartDigital
  * @description Core image analysis engine that performs comprehensive website image analysis including
@@ -15,7 +15,7 @@ class PageImagesAnalyzer {
         this.cheerio = cheerio;
     }
 
-    async analyzePage({ url, html, maxImagesPerPage = 20, includeImageSizeAnalysis = true, includeAltTextAnalysis = true, userAgent = 'Mozilla/5.0 (compatible; MSD-PageImages/1.0)' }) {
+    async analyzePage({ url, html, maxImagesPerPage = 20, includeImageSizeAnalysis = true, includeAltTextAnalysis = true, userAgent = 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)' }) {
         const $ = this.cheerio.load(html);
         
         // Basic page information

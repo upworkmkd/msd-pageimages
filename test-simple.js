@@ -13,7 +13,7 @@ async function testSimpleAnalysis() {
         // Fetch page content
         const response = await axios.get(testUrl, {
             headers: {
-                'User-Agent': 'Mozilla/5.0 (compatible; MSD-PageImages/1.0)'
+                'User-Agent': 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)'
             },
             timeout: 10000
         });
@@ -36,7 +36,7 @@ async function testSimpleAnalysis() {
             maxImagesPerPage: 20,
             includeImageSizeAnalysis: true,
             includeAltTextAnalysis: true,
-            userAgent: 'Mozilla/5.0 (compatible; MSD-PageImages/1.0)'
+            userAgent: 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)'
         });
         
         // Display results

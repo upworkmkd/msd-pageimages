@@ -1,5 +1,5 @@
 /**
- * MSD Page Images Actor - Main Entry Point
+ * SEO Image Optimization Checker - Main Entry Point
  * 
  * @author MySmartDigital
  * @description Page images analysis actor that extracts and analyzes images from websites,
@@ -20,11 +20,11 @@ Actor.main(async () => {
         includeImageSizeAnalysis = true,
         includeAltTextAnalysis = true,
         crawlInternalLinks = true,
-        userAgent = 'Mozilla/5.0 (compatible; MSD-PageImages/1.0)',
+        userAgent = 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)',
         waitForPageLoad = 3000
     } = input;
 
-    console.log('Starting MSD Page Images Analysis...');
+    console.log('Starting SEO Image Optimization Analysis...');
     console.log('Input:', JSON.stringify(input, null, 2));
 
     // Validate input
@@ -177,9 +177,13 @@ Actor.main(async () => {
         // Push the comprehensive result to dataset
         await Actor.pushData(finalOutput);
 
+        // Report usage for event-based billing (per page analyzed)
+        const pagesAnalyzedCount = results.filter(r => !r.error && r.statusCode >= 200 && r.statusCode < 300).length;
+        await Actor.setValue('PAGE_ANALYZED', pagesAnalyzedCount);
+
         console.log(`Page Images Analysis completed! Processed ${results.length} pages.`);
         console.log(`Total images found: ${domainAnalysis.total_images_found}`);
-        console.log(`Images without alt text: ${domainAnalysis.images_without_alt_count}`);
+        console.log(`Images without alt text: ${domainAnalysis.total_images_without_alt}`);
         console.log(`Average images per page: ${domainAnalysis.average_images_per_page}`);
 
     } catch (error) {

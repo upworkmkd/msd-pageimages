@@ -3,82 +3,196 @@
 	"fields": {
 		"type": "object",
 		"properties": {
-			"url": {
-				"type": "string",
-				"description": "Page URL"
-			},
-			"title": {
-				"type": "string",
-				"description": "Page title"
-			},
 			"domain": {
-				"type": "string",
-				"description": "Domain name"
-			},
-			"totalImagesFound": {
-				"type": "number",
-				"description": "Total number of images found on the page"
-			},
-			"imagesAnalyzed": {
-				"type": "number",
-				"description": "Number of images analyzed"
-			},
-			"images": {
-				"type": "array",
-				"description": "Array of analyzed images"
-			},
-			"imagesWithoutAlt": {
-				"type": "array",
-				"description": "Images without alt text"
-			},
-			"imagesWithoutAltCount": {
-				"type": "number",
-				"description": "Count of images without alt text"
-			},
-			"imagesWithAltCount": {
-				"type": "number",
-				"description": "Count of images with alt text"
-			},
-			"averageImageSize": {
-				"type": "number",
-				"description": "Average image size in bytes"
-			},
-			"totalImageSize": {
-				"type": "number",
-				"description": "Total size of all images in bytes"
-			},
-			"imageTypes": {
 				"type": "object",
-				"description": "Distribution of image types"
+				"description": "Domain-level analysis summary",
+				"properties": {
+					"domain_name": {
+						"type": "string",
+						"description": "Domain name analyzed"
+					},
+					"total_pages_analyzed": {
+						"type": "number",
+						"description": "Total number of pages analyzed"
+					},
+					"total_images_found": {
+						"type": "number",
+						"description": "Total images found across all pages"
+					},
+					"total_images_without_alt": {
+						"type": "number",
+						"description": "Total images missing alt text"
+					},
+					"total_images_without_alt_percentage": {
+						"type": "number",
+						"description": "Percentage of images without alt text"
+					},
+					"average_images_per_page": {
+						"type": "number",
+						"description": "Average number of images per page"
+					},
+					"total_image_size_kb": {
+						"type": "number",
+						"description": "Total size of all images in KB"
+					},
+					"image_types": {
+						"type": "object",
+						"description": "Distribution of image file types"
+					},
+					"most_common_image_type": {
+						"type": "string",
+						"description": "Most frequently used image format"
+					},
+					"optimization_recommendations": {
+						"type": "object",
+						"description": "SEO and accessibility recommendations"
+					}
+				}
 			},
-			"analysis_date": {
-				"type": "string",
-				"description": "Analysis date and time"
+			"pages": {
+				"type": "array",
+				"description": "Per-page analysis results",
+				"items": {
+					"type": "object",
+					"properties": {
+						"url": {
+							"type": "string",
+							"description": "Page URL"
+						},
+						"title": {
+							"type": "string",
+							"description": "Page title"
+						},
+						"totalImagesFound": {
+							"type": "number",
+							"description": "Total images found on page"
+						},
+						"imagesAnalyzed": {
+							"type": "number",
+							"description": "Number of images analyzed"
+						},
+						"imagesWithoutAltCount": {
+							"type": "number",
+							"description": "Images without alt text"
+						},
+						"imagesWithAltCount": {
+							"type": "number",
+							"description": "Images with alt text"
+						},
+						"images": {
+							"type": "array",
+							"description": "Detailed image data"
+						},
+						"statusCode": {
+							"type": "number",
+							"description": "HTTP response status"
+						},
+						"analysis_date": {
+							"type": "string",
+							"description": "Analysis timestamp"
+						}
+					}
+				}
 			},
-			"data_source": {
-				"type": "string",
-				"description": "Data source identifier"
+			"analysis": {
+				"type": "object",
+				"description": "Analysis metadata",
+				"properties": {
+					"total_pages_processed": {
+						"type": "number",
+						"description": "Total pages processed"
+					},
+					"analysis_completed_at": {
+						"type": "string",
+						"description": "Analysis completion timestamp"
+					},
+					"images_engine_version": {
+						"type": "string",
+						"description": "Analysis engine version"
+					},
+					"data_format_version": {
+						"type": "string",
+						"description": "Data format version"
+					}
+				}
 			}
 		}
 	},
 	"views": {
 		"overview": {
-			"title": "Overview",
-			"description": "Overview of page images analysis results",
+			"title": "Domain Overview",
+			"description": "High-level domain analysis summary",
+			"transformation": {
+				"fields": [
+					"domain.domain_name",
+					"domain.total_pages_analyzed",
+					"domain.total_images_found",
+					"domain.total_images_without_alt",
+					"domain.total_images_without_alt_percentage",
+					"domain.average_images_per_page",
+					"domain.total_image_size_kb",
+					"domain.most_common_image_type",
+					"analysis.analysis_completed_at"
+				],
+				"flatten": ["domain", "analysis"]
+			},
+			"display": {
+				"component": "table",
+				"properties": {
+					"domain.domain_name": {
+						"label": "Domain",
+						"format": "text"
+					},
+					"domain.total_pages_analyzed": {
+						"label": "Pages Analyzed",
+						"format": "number"
+					},
+					"domain.total_images_found": {
+						"label": "Total Images",
+						"format": "number"
+					},
+					"domain.total_images_without_alt": {
+						"label": "Missing Alt Text",
+						"format": "number"
+					},
+					"domain.total_images_without_alt_percentage": {
+						"label": "Missing Alt %",
+						"format": "number"
+					},
+					"domain.average_images_per_page": {
+						"label": "Avg Images/Page",
+						"format": "number"
+					},
+					"domain.total_image_size_kb": {
+						"label": "Total Size (KB)",
+						"format": "number"
+					},
+					"domain.most_common_image_type": {
+						"label": "Top Image Format",
+						"format": "text"
+					},
+					"analysis.analysis_completed_at": {
+						"label": "Analysis Date",
+						"format": "date"
+					}
+				}
+			}
+		},
+		"pages": {
+			"title": "Page Analysis",
+			"description": "Per-page image analysis results",
 			"transformation": {
 				"fields": [
 					"url",
 					"title",
-					"domain",
 					"totalImagesFound",
 					"imagesAnalyzed",
 					"imagesWithAltCount",
 					"imagesWithoutAltCount",
-					"averageImageSize",
-					"totalImageSize",
-					"imageTypes",
+					"statusCode",
 					"analysis_date"
-				]
+				],
+				"unwind": ["pages"]
 			},
 			"display": {
 				"component": "table",
@@ -89,10 +203,6 @@
 					},
 					"title": {
 						"label": "Page Title",
-						"format": "text"
-					},
-					"domain": {
-						"label": "Domain",
 						"format": "text"
 					},
 					"totalImagesFound": {
@@ -111,17 +221,9 @@
 						"label": "Without Alt Text",
 						"format": "number"
 					},
-					"averageImageSize": {
-						"label": "Avg Size (bytes)",
+					"statusCode": {
+						"label": "Status Code",
 						"format": "number"
-					},
-					"totalImageSize": {
-						"label": "Total Size (bytes)",
-						"format": "number"
-					},
-					"imageTypes": {
-						"label": "Image Types",
-						"format": "object"
 					},
 					"analysis_date": {
 						"label": "Analysis Date",
@@ -131,25 +233,21 @@
 			}
 		},
 		"images": {
-			"title": "Images Detail",
-			"description": "Detailed information for each image",
+			"title": "Image Details",
+			"description": "Detailed information for each image found",
 			"transformation": {
 				"fields": [
 					"url",
 					"imageUrl",
 					"imageIndex",
 					"alt",
-					"title",
-					"width",
-					"height",
 					"hasAlt",
-					"hasTitle",
 					"contentType",
 					"sizeInBytes",
 					"sizeInKb",
 					"statusCode"
 				],
-				"unwind": ["images"]
+				"unwind": ["pages", "images"]
 			},
 			"display": {
 				"component": "table",
@@ -159,7 +257,7 @@
 						"format": "link"
 					},
 					"imageUrl": {
-						"label": "Image URL",
+						"label": "Image",
 						"format": "image"
 					},
 					"imageIndex": {
@@ -170,24 +268,8 @@
 						"label": "Alt Text",
 						"format": "text"
 					},
-					"title": {
-						"label": "Title",
-						"format": "text"
-					},
-					"width": {
-						"label": "Width",
-						"format": "text"
-					},
-					"height": {
-						"label": "Height",
-						"format": "text"
-					},
 					"hasAlt": {
 						"label": "Has Alt",
-						"format": "boolean"
-					},
-					"hasTitle": {
-						"label": "Has Title",
 						"format": "boolean"
 					},
 					"contentType": {
@@ -209,17 +291,20 @@
 				}
 			}
 		},
-		"issues": {
-			"title": "Images Without Alt Text",
-			"description": "Images missing alt text (accessibility issues)",
+		"accessibility_issues": {
+			"title": "Accessibility Issues",
+			"description": "Images missing alt text (WCAG compliance issues)",
 			"transformation": {
 				"fields": [
 					"url",
 					"title",
 					"imageUrl",
-					"imageIndex"
+					"imageIndex",
+					"contentType",
+					"sizeInKb"
 				],
-				"unwind": ["imagesWithoutAlt"]
+				"unwind": ["pages", "images"],
+				"omit": ["images"]
 			},
 			"display": {
 				"component": "table",
@@ -233,11 +318,19 @@
 						"format": "text"
 					},
 					"imageUrl": {
-						"label": "Image URL",
+						"label": "Image",
 						"format": "image"
 					},
 					"imageIndex": {
 						"label": "Image Index",
+						"format": "number"
+					},
+					"contentType": {
+						"label": "Format",
+						"format": "text"
+					},
+					"sizeInKb": {
+						"label": "Size (KB)",
 						"format": "number"
 					}
 				}
@@ -245,4 +338,3 @@
 		}
 	}
 }
-

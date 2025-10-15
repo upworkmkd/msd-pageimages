@@ -1,8 +1,8 @@
-# MSD Page Images Actor
+# SEO Image Optimization Checker
 
 Extract and analyze all images from websites with comprehensive reports on image usage, accessibility, and optimization opportunities.
 
-## What does MSD Page Images Actor do?
+## What does SEO Image Optimization Checker do?
 
 This Apify Actor crawls websites and performs detailed image analysis including:
 

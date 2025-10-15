@@ -20,7 +20,7 @@ const urlNormalizer = new URLNormalizer();
 app.get('/health', (req, res) => {
     res.json({ 
         status: 'OK', 
-        message: 'MSD Page Images API is running',
+        message: 'SEO Image Optimization Checker API is running',
         timestamp: new Date().toISOString()
     });
 });
@@ -33,7 +33,7 @@ app.post('/analyze', async (req, res) => {
             maxImagesPerPage = 20,
             includeImageSizeAnalysis = true,
             includeAltTextAnalysis = true,
-            userAgent = 'Mozilla/5.0 (compatible; MSD-PageImages/1.0)'
+            userAgent = 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)'
         } = req.body;
 
         if (!url) {
@@ -112,7 +112,7 @@ app.post('/analyze-multi', async (req, res) => {
             includeImageSizeAnalysis = true,
             includeAltTextAnalysis = true,
             crawlInternalLinks = true,
-            userAgent = 'Mozilla/5.0 (compatible; MSD-PageImages/1.0)'
+            userAgent = 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)'
         } = req.body;
 
         if (!startUrl) {
@@ -315,7 +315,7 @@ function calculateDomainAnalysis(results) {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`MSD Page Images API server is running on port ${PORT}`);
+    console.log(`SEO Image Optimization Checker API server is running on port ${PORT}`);
     console.log(`Health check: http://localhost:${PORT}/health`);
     console.log(`Single page analysis: POST http://localhost:${PORT}/analyze`);
     console.log(`Multi-page analysis: POST http://localhost:${PORT}/analyze-multi`);

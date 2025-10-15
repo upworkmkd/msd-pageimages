@@ -1,7 +1,7 @@
 {
-  "name": "msd-pageimages",
+  "name": "SEO-Image-Optimization-Checker",
   "version": "1.0.0",
-  "description": "Page images analysis actor for MySmartDigital",
+  "description": "SEO Image Optimization Checker - Comprehensive image analysis for SEO and accessibility optimization",
   "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
@@ -24,7 +24,11 @@
     "jest": "^29.7.0"
   },
   "keywords": [
+    "seo",
     "images",
+    "optimization",
+    "accessibility",
+    "alt-text",
     "analysis",
     "crawling",
     "web-scraping",

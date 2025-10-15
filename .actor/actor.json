@@ -1,11 +1,17 @@
 {
 	"actorSpecification": 1,
-	"name": "msd-pageimages",
-	"title": "Page Images Analyzer",
+	"name": "SEO-Image-Optimization-Checker",
+	"title": "SEO Image Optimization Checker",
 	"version": "1.0",
 	"buildTag": "latest",
 	"environmentVariables": {},
 	"storages": {
 		"dataset": "./dataset_schema.json"
+	},
+	"usageCounters": {
+		"PAGE_ANALYZED": {
+			"label": "Pages analyzed",
+			"description": "Number of web pages analyzed for image optimization and SEO insights"
+		}
 	}
 }

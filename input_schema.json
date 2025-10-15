@@ -1,5 +1,5 @@
 {
-  "title": "MSD Page Images Input",
+  "title": "SEO Image Optimization Checker Input",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
@@ -53,7 +53,7 @@
       "title": "User Agent",
       "type": "string",
       "description": "User agent string to use for requests",
-      "default": "Mozilla/5.0 (compatible; MSD-PageImages/1.0)",
+      "default": "Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)",
       "editor": "textfield"
     },
     "waitForPageLoad": {

@@ -1,5 +1,5 @@
 /**
- * URL Normalizer for MSD Page Images Actor
+ * URL Normalizer for SEO Image Optimization Checker
  * 
  * @author MySmartDigital
  * @description Utility class for normalizing URLs by removing UTM parameters,
