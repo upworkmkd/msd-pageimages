@@ -1,7 +1,7 @@
 {
 	"actorSpecification": 1,
 	"name": "SEO-Image-Optimization-Checker",
-	"title": "SEO Image Optimization Checker",
+	"title": "SEO Page Images Analyzer",
 	"version": "1.0",
 	"buildTag": "latest",
 	"environmentVariables": {},
@@ -11,7 +11,7 @@
 	"usageCounters": {
 		"PAGE_ANALYZED": {
 			"label": "Pages analyzed",
-			"description": "Number of web pages analyzed for image optimization and SEO insights"
+			"description": "Number of web pages analyzed for image optimization and SEO"
 		}
 	}
 }

@@ -10,10 +10,17 @@
       "editor": "textfield",
       "prefill": "https://example.com"
     },
+    "crawlUrls": {
+      "title": "Crawl Multiple Pages",
+      "type": "boolean",
+      "description": "Whether to crawl internal links and analyze multiple pages. If false, only the startUrl will be analyzed.",
+      "default": false,
+      "editor": "checkbox"
+    },
     "maxPages": {
-      "title": "Max Pages",
+      "title": "Maximum Pages to Check",
       "type": "integer",
-      "description": "Maximum number of pages to crawl and analyze for images",
+      "description": "Maximum number of pages to crawl and analyze for images (only applies when crawlUrls is true)",
       "minimum": 1,
       "maximum": 100,
       "default": 5,
@@ -42,13 +49,6 @@
       "default": true,
       "editor": "checkbox"
     },
-    "crawlInternalLinks": {
-      "title": "Crawl Internal Links",
-      "type": "boolean",
-      "description": "Whether to crawl internal links to find more pages",
-      "default": true,
-      "editor": "checkbox"
-    },
     "userAgent": {
       "title": "User Agent",
       "type": "string",
@@ -66,5 +66,5 @@
       "editor": "number"
     }
   },
-  "required": ["startUrl"]
+  "required": ["startUrl", "maxPages"]
 }

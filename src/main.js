@@ -15,11 +15,11 @@ Actor.main(async () => {
     const input = await Actor.getInput();
     const {
         startUrl,
+        crawlUrls = false,
         maxPages = 5,
         maxImagesPerPage = 20,
         includeImageSizeAnalysis = true,
         includeAltTextAnalysis = true,
-        crawlInternalLinks = true,
         userAgent = 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)',
         waitForPageLoad = 3000
     } = input;
@@ -45,14 +45,21 @@ Actor.main(async () => {
         const visitedUrls = new Set();
         const urlsToProcess = [startUrl];
         let processedCount = 0;
+        let pagesAnalyzedCount = 0; // Track billable events for monetization
         
-        while (urlsToProcess.length > 0 && processedCount < maxPages) {
+        // Determine the maximum pages to process
+        const effectiveMaxPages = crawlUrls ? maxPages : 1;
+        
+        console.log(`Crawl mode: ${crawlUrls ? 'Multi-page crawling enabled' : 'Single page analysis only'}`);
+        console.log(`Maximum pages to process: ${effectiveMaxPages}`);
+        
+        while (urlsToProcess.length > 0 && processedCount < effectiveMaxPages) {
             const currentUrl = urlsToProcess.shift();
             
             if (visitedUrls.has(currentUrl)) continue;
             visitedUrls.add(currentUrl);
             
-            console.log(`Processing: ${currentUrl} (${processedCount + 1}/${maxPages})`);
+            console.log(`Processing: ${currentUrl} (${processedCount + 1}/${effectiveMaxPages})`);
             
             try {
                 // Fetch page content using axios
@@ -95,12 +102,15 @@ Actor.main(async () => {
 
                 results.push(result);
                 
+                // Track this page analysis as a billable event for monetization
+                pagesAnalyzedCount++;
+                
                 console.log(`Completed analysis for: ${normalizedUrl} (Status: ${statusCode})`);
                 console.log(`Images found: ${imageData.totalImagesFound}, Analyzed: ${imageData.imagesAnalyzed}`);
                 console.log(`Images without alt: ${imageData.imagesWithoutAltCount}`);
                 
                 // If crawling is enabled, extract internal links for further processing
-                if (crawlInternalLinks && imageData._internalLinks && imageData._internalLinks.length > 0) {
+                if (crawlUrls && imageData._internalLinks && imageData._internalLinks.length > 0) {
                     const baseDomain = new URL(normalizedUrl).origin;
                     
                     for (const linkObj of imageData._internalLinks) {
@@ -174,17 +184,20 @@ Actor.main(async () => {
             }
         };
 
-        // Push the comprehensive result to dataset
+        // Set the comprehensive result as the main output
+        await Actor.setValue('OUTPUT', finalOutput);
+        
+        // Also push to dataset for compatibility
         await Actor.pushData(finalOutput);
 
-        // Report usage for event-based billing (per page analyzed)
-        const pagesAnalyzedCount = results.filter(r => !r.error && r.statusCode >= 200 && r.statusCode < 300).length;
+        // Report usage for event-based billing
         await Actor.setValue('PAGE_ANALYZED', pagesAnalyzedCount);
 
         console.log(`Page Images Analysis completed! Processed ${results.length} pages.`);
         console.log(`Total images found: ${domainAnalysis.total_images_found}`);
         console.log(`Images without alt text: ${domainAnalysis.total_images_without_alt}`);
         console.log(`Average images per page: ${domainAnalysis.average_images_per_page}`);
+        console.log(`Billable events (pages analyzed): ${pagesAnalyzedCount}`);
 
     } catch (error) {
         console.error('General error:', error);
