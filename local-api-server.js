@@ -30,7 +30,7 @@ app.post('/analyze', async (req, res) => {
     try {
         const { 
             url, 
-            maxImagesPerPage = 20,
+            maxImagesPerPage = -1,
             includeImageSizeAnalysis = true,
             includeAltTextAnalysis = true,
             userAgent = 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)'
@@ -108,7 +108,7 @@ app.post('/analyze-multi', async (req, res) => {
         const { 
             startUrl,
             maxPages = 5,
-            maxImagesPerPage = 20,
+            maxImagesPerPage = -1,
             includeImageSizeAnalysis = true,
             includeAltTextAnalysis = true,
             crawlInternalLinks = true,

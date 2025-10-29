@@ -17,7 +17,7 @@ Actor.main(async () => {
         startUrl,
         crawlUrls = false,
         maxPages = 5,
-        maxImagesPerPage = 20,
+        maxImagesPerPage = -1,
         includeImageSizeAnalysis = true,
         includeAltTextAnalysis = true,
         userAgent = 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)',

@@ -15,7 +15,7 @@ class PageImagesAnalyzer {
         this.cheerio = cheerio;
     }
 
-    async analyzePage({ url, html, maxImagesPerPage = 20, includeImageSizeAnalysis = true, includeAltTextAnalysis = true, userAgent = 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)' }) {
+    async analyzePage({ url, html, maxImagesPerPage = -1, includeImageSizeAnalysis = true, includeAltTextAnalysis = true, userAgent = 'Mozilla/5.0 (compatible; SEO-Image-Optimization-Checker/1.0)' }) {
         const $ = this.cheerio.load(html);
         
         // Basic page information
@@ -28,21 +28,27 @@ class PageImagesAnalyzer {
         const linksAnalysis = this.analyzeLinks($, url);
         
         return {
+            // Basic Page Information
             url: pageInfo.url,
             title: pageInfo.title,
             domain: pageInfo.domain,
-            totalImagesFound: imagesAnalysis.totalImagesFound,
-            imagesAnalyzed: imagesAnalysis.imagesAnalyzed,
+            
+            // Images Information (breakdown first, then counts)
             images: imagesAnalysis.images,
             imagesWithoutAlt: imagesAnalysis.imagesWithoutAlt,
             imagesWithoutAltCount: imagesAnalysis.imagesWithoutAltCount,
             imagesWithAltCount: imagesAnalysis.imagesWithAltCount,
+            totalImagesFound: imagesAnalysis.totalImagesFound,
+            imagesAnalyzed: imagesAnalysis.imagesAnalyzed,
             averageImageSize: imagesAnalysis.averageImageSize,
             totalImageSize: imagesAnalysis.totalImageSize,
             imageTypes: imagesAnalysis.imageTypes,
+            
+            // Metadata
             analysis_date: new Date().toISOString(),
             data_source: 'msd_page_images',
-            // Store internal links for crawling but don't include in response
+            
+            // Internal links for crawling (not included in final response)
             _internalLinks: linksAnalysis.internalLinks
         };
     }
@@ -66,7 +72,8 @@ class PageImagesAnalyzer {
         let totalImageSize = 0;
         const imageTypes = {};
 
-        const imagesToAnalyze = Math.min(imageElements.length, maxImagesPerPage);
+        // If maxImagesPerPage is -1, analyze all images; otherwise use the limit
+        const imagesToAnalyze = maxImagesPerPage === -1 ? imageElements.length : Math.min(imageElements.length, maxImagesPerPage);
 
         for (let i = 0; i < imagesToAnalyze; i++) {
             const el = imageElements[i];
