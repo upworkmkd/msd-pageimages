@@ -129,13 +129,19 @@ app.post('/analyze-multi', async (req, res) => {
 
         const results = [];
         const visitedUrls = new Set();
-        const urlsToProcess = [startUrl];
+        // Normalize start URL before adding to processing queue
+        const normalizedStartUrl = urlNormalizer.normalize(startUrl);
+        const urlsToProcess = [normalizedStartUrl];
         let processedCount = 0;
         
         while (urlsToProcess.length > 0 && processedCount < maxPages) {
             const currentUrl = urlsToProcess.shift();
             
-            if (visitedUrls.has(currentUrl)) continue;
+            // Check if already visited (currentUrl is already normalized)
+            if (visitedUrls.has(currentUrl)) {
+                console.log(`Skipping already processed URL: ${currentUrl}`);
+                continue;
+            }
             visitedUrls.add(currentUrl);
             
             console.log(`Processing: ${currentUrl} (${processedCount + 1}/${maxPages})`);
@@ -158,8 +164,8 @@ app.post('/analyze-multi', async (req, res) => {
                 const html = response.data;
                 const statusCode = response.status;
                 
-                // Normalize URL
-                const normalizedUrl = urlNormalizer.normalize(currentUrl);
+                // Use normalized URL (currentUrl is already normalized)
+                const normalizedUrl = currentUrl;
                 
                 // Perform image analysis
                 const imageData = await pageImagesAnalyzer.analyzePage({
