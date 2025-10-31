@@ -109,6 +109,7 @@ Actor.main(async () => {
                 results.push(result);
                 
                 // Track this page analysis as a billable event for monetization
+                await Actor.incrementUsageCounter('PAGE_ANALYZED');
                 pagesAnalyzedCount++;
                 
                 console.log(`Completed analysis for: ${normalizedUrl} (Status: ${statusCode})`);
@@ -196,8 +197,7 @@ Actor.main(async () => {
         // Also push to dataset for compatibility
         await Actor.pushData(finalOutput);
 
-        // Report usage for event-based billing
-        await Actor.setValue('PAGE_ANALYZED', pagesAnalyzedCount);
+        // Usage counters are already incremented per page above
 
         console.log(`Page Images Analysis completed! Processed ${results.length} pages.`);
         console.log(`Total images found: ${domainAnalysis.total_images_found}`);
